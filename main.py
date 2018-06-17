@@ -2,7 +2,7 @@
 import json
 import requests
 
-URL = 'https://api.telegram.org/bot362323772:AAHyybot3pNztJ2SIj7VxHElxLTbR61fijU/' # URL на который отправляется запрос
+URL = 'https://api.telegram.org/bot' # URL на который отправляется запрос
 
 f = open(r'data.json', "wb")
 ufr = requests.get("https://tickets.fifa.com/API/WCachedL1/ru/BasicCodes/GetBasicCodesAvailavilityDemmand?currencyId=USD")
@@ -53,12 +53,12 @@ with open('data.json') as data_file:
                 'parse_mode': 'HTML'  # про форматирование текста ниже
             }
 
-            try:
-                request = requests.post(URL + 'sendMessage', data = message_data)  # запрос на отправку сообщения
-            except:
-                print('Send message error')
-                return False
+            #try:
+            #    request = requests.post(URL + 'sendMessage', data = message_data)  # запрос на отправку сообщения
+            #except:
+            #    print('Send message error')
+            #    return False
 
-            if not request.status_code == 200:  # проверим статус пришедшего ответа
-                return False
+            #if not request.status_code == 200:  # проверим статус пришедшего ответа
+            #    return False
 
