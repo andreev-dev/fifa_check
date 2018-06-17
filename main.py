@@ -2,6 +2,8 @@
 import json
 import requests
 
+URL = 'https://api.telegram.org/bot362323772:AAHyybot3pNztJ2SIj7VxHElxLTbR61fijU/' # URL на который отправляется запрос
+
 f = open(r'data.json', "wb")
 ufr = requests.get("https://tickets.fifa.com/API/WCachedL1/ru/BasicCodes/GetBasicCodesAvailavilityDemmand?currencyId=USD")
 f.write(ufr.content)
@@ -14,9 +16,9 @@ with open('data.json') as data_file:
         if i['a'] == 1 and i['c'] in (17, 56) and i['p'] in ('IMT20', 'IMT23', 'IMT30', 'IMT42', 'IMT50', 'IMT51', 'IMT52', 'IMT56', 'IMT57', 'IMT58', 'IMT62', 'IMT64'):
 
             if i['c'] == 17:
-                cat = 'CAT 4'
+                cat = '****** CAT 4'
             elif i['c'] == 56:
-                cat = 'OV'
+                cat = '****** OV'
 
             if i['p'] == 'IMT20':
                 match = '20.06 21:00, Kazan, Iran - Spain'
@@ -44,3 +46,19 @@ with open('data.json') as data_file:
                 match = '15.07 18:00, Moscow'
 
             print(match, cat)
+
+            message_data = {  # формируем информацию для отправки сообщения
+                'chat_id': 159496178,  # куда отправляем сообщение
+                'text': match + cat,  # само сообщение для отправки
+                'parse_mode': 'HTML'  # про форматирование текста ниже
+            }
+
+            try:
+                request = requests.post(URL + 'sendMessage', data = message_data)  # запрос на отправку сообщения
+            except:
+                print('Send message error')
+                return False
+
+            if not request.status_code == 200:  # проверим статус пришедшего ответа
+                return False
+
